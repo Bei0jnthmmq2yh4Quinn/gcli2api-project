@@ -7,8 +7,6 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: AUTH_KEY
-        value: "YOUR_SECRET_AUTH_KEY_HERE" # 稍后在 Render 网站上修改这个值
         sync: false
       - key: DATABASE_DSN
-        value: "YOUR_DATABASE_CONNECTION_STRING_HERE" # 稍后在 Render 网站上修改这个值
         sync: false

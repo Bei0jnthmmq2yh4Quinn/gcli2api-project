@@ -5,21 +5,11 @@ services:
     plan: free
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
+    envVarGroups:
+      - name: db-credentials  # 引用一个环境组，我们稍后会在 Render 平台上创建它
     envVars:
+      # 下面这些不是秘密信息，可以直接写在这里
       - key: database__client
-        value: mysql  # 如果你用的外部数据库是 MySQL，就保持这个。如果是 PostgreSQL，就改成 pg
-      
-      # 下面的值我们将会在 Render 平台上设置
-      - key: database__connection__host
-        fromSecret: true  # 表示这个值从 Render 的秘密变量里读取
-      - key: database__connection__port
-        fromSecret: true
-      - key: database__connection__user
-        fromSecret: true
-      - key: database__connection__password
-        fromSecret: true
-      - key: database__connection__database
-        fromSecret: true
-
+        value: mysql # 如果你用的是 PostgreSQL，这里要改成 pg
       - key: url
         value: https://${RENDER_EXTERNAL_HOSTNAME}

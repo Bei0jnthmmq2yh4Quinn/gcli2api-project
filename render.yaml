@@ -5,11 +5,13 @@ services:
     plan: free
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
-    envVarGroups:
-      - name: db-credentials  # 引用一个环境组，我们稍后会在 Render 平台上创建它
     envVars:
-      # 下面这些不是秘密信息，可以直接写在这里
+      # 正确的语法：从你已经在 Render UI 中创建的环境组引入所有变量
+      - fromGroup: db-credentials
+      
+      # 下面这些非秘密变量可以继续留在这里
       - key: database__client
-        value: mysql # 如果你用的是 PostgreSQL，这里要改成 pg
+        value: mysql # 如果你用的是 PostgreSQL, 这里要改成 pg
       - key: url
         value: https://${RENDER_EXTERNAL_HOSTNAME}
+

@@ -1,4 +1,5 @@
 services:
+  # 这是你的 API 服务
   - type: web
     name: gcli2api
     env: docker
@@ -17,28 +18,30 @@ services:
         fromService:
           type: pserv
           name: db
-          property: user
+          # 修正1：将 'user' 改为 'MYSQL_USER'
+          property: MYSQL_USER
       - key: database__connection__password
         fromService:
           type: pserv
           name: db
-          property: password
+          # 修正2：将 'password' 改为 'MYSQL_PASSWORD'
+          property: MYSQL_PASSWORD
       - key: database__connection__database
         fromService:
           type: pserv
           name: db
-          property: database
+          # 修正3：将 'database' 改为 'MYSQL_DATABASE'
+          property: MYSQL_DATABASE
       - key: url
         value: https://${RENDER_EXTERNAL_HOSTNAME}
+
+  # 这是你的数据库服务
   - type: pserv
     name: db
     env: docker
     plan: free
     dockerfilePath: ./Dockerfile.db
-    disk:
-      name: mysql-data
-      mountPath: /var/lib/mysql
-      sizeGB: 1
+    # 修正4：将整个 'disk' 部分删除，以符合免费套餐要求
     envVars:
       - key: MYSQL_ROOT_PASSWORD
         generateValue: true
@@ -48,3 +51,4 @@ services:
         generateValue: true
       - key: MYSQL_DATABASE
         generateValue: true
+

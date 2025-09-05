@@ -1,5 +1,4 @@
 services:
-  # 这是你的 API 服务
   - type: web
     name: gcli2api
     env: docker
@@ -8,47 +7,19 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: database__client
-        value: mysql
+        value: mysql  # 如果你用的外部数据库是 MySQL，就保持这个。如果是 PostgreSQL，就改成 pg
+      
+      # 下面的值我们将会在 Render 平台上设置
       - key: database__connection__host
-        fromService:
-          type: pserv
-          name: db
-          property: host
+        fromSecret: true  # 表示这个值从 Render 的秘密变量里读取
+      - key: database__connection__port
+        fromSecret: true
       - key: database__connection__user
-        fromService:
-          type: pserv
-          name: db
-          # 修正1：将 'user' 改为 'MYSQL_USER'
-          property: MYSQL_USER
+        fromSecret: true
       - key: database__connection__password
-        fromService:
-          type: pserv
-          name: db
-          # 修正2：将 'password' 改为 'MYSQL_PASSWORD'
-          property: MYSQL_PASSWORD
+        fromSecret: true
       - key: database__connection__database
-        fromService:
-          type: pserv
-          name: db
-          # 修正3：将 'database' 改为 'MYSQL_DATABASE'
-          property: MYSQL_DATABASE
+        fromSecret: true
+
       - key: url
         value: https://${RENDER_EXTERNAL_HOSTNAME}
-
-  # 这是你的数据库服务
-  - type: pserv
-    name: db
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile.db
-    # 修正4：将整个 'disk' 部分删除，以符合免费套餐要求
-    envVars:
-      - key: MYSQL_ROOT_PASSWORD
-        generateValue: true
-      - key: MYSQL_USER
-        generateValue: true
-      - key: MYSQL_PASSWORD
-        generateValue: true
-      - key: MYSQL_DATABASE
-        generateValue: true
-

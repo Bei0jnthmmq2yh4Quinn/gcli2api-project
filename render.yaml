@@ -6,12 +6,9 @@ services:
     healthCheckPath: /
     dockerfilePath: ./Dockerfile
     envVars:
-      # 正确的语法：从你已经在 Render UI 中创建的环境组引入所有变量
-      - fromGroup: db-credentials
-      
-      # 下面这些非秘密变量可以继续留在这里
-      - key: database__client
-        value: mysql # 如果你用的是 PostgreSQL, 这里要改成 pg
-      - key: url
-        value: https://${RENDER_EXTERNAL_HOSTNAME}
-
+      - key: AUTH_KEY
+        value: "YOUR_SECRET_AUTH_KEY_HERE" # 稍后在 Render 网站上修改这个值
+        sync: false
+      - key: DATABASE_DSN
+        value: "YOUR_DATABASE_CONNECTION_STRING_HERE" # 稍后在 Render 网站上修改这个值
+        sync: false

@@ -4,8 +4,7 @@ services:
     env: docker
     plan: free
     healthCheckPath: /
-    docker:
-      dockerfilePath: ./Dockerfile
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: database__client
         value: mysql
@@ -35,8 +34,7 @@ services:
     name: db
     env: docker
     plan: free
-    docker:
-      dockerfilePath: ./Dockerfile.db
+    dockerfilePath: ./Dockerfile.db
     disk:
       name: mysql-data
       mountPath: /var/lib/mysql

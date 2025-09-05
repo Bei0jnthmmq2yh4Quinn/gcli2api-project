@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  gcli2api:
+    image: ghcr.io/su-kaka/gcli2api:latest
+    container_name: gcli2api
+    restart: unless-stopped
+    ports:
+      # 主服务 API 端口
+      - "7861:7861"
+      # Google 认证回调需要的端口
+      - "8080:8080"
+    environment:
+      # 这两个环境变量保持不变
+      - PASSWORD=sk980706
+      - PORT=7861 # 程序的主API依然在7861端口
+    volumes:
+      - ./data/creds:/app/creds
